@@ -1,0 +1,97 @@
+---
+title: "population_estimates_lacity_acs"
+author: "Hunter Owens"
+date: "June 11, 2019"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## LA City Population Estimates ACS
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r echo=FALSE}
+library(tidycensus)
+library(tidyverse)
+census_api_key('13094878fd00ce1311d9ccb3d1e7cfa3438a9a0f')
+```
+
+## Get ACS Data
+
+```{r}
+
+v17 <- load_variables(2017, "acs5", cache = TRUE)
+
+columns <- v17 %>% filter(str_detect(name,"B01001H") | 
+                                   str_detect(name,"B01001B") | 
+                                   str_detect(name,"B01001C") |
+                                   str_detect(name,"B01001D") |
+                                   str_detect(name,"B01001E") |
+                                   str_detect(name,"B01001F") |
+                                   str_detect(name,"B01001G") |
+                                   str_detect(name,"B01001I") )
+
+pop_data <- get_acs(geography="place",
+                 year = 2017,
+                 variables = columns$name,
+                 state = "CA", 
+                 survey= "acs5")
+```
+
+Now, we need to filter to Los Angeles and sum the appropriate columns, 
+which are 7->13 (Men) and 22-28 (Women). We can then group by the catagories and sum
+
+```{r}
+la_only <- pop_data %>% filter(GEOID == '0644000') %>%
+    filter(str_detect(variable, "07$") |
+             str_detect(variable, "08$") |
+             str_detect(variable, "09$") |
+             str_detect(variable, "10$") |
+             str_detect(variable, "11$") |
+             str_detect(variable, "12$") |
+             str_detect(variable, "13$") |
+             str_detect(variable, "22$") |
+             str_detect(variable, "23$") |
+             str_detect(variable, "24$") |
+             str_detect(variable, "25$") |
+             str_detect(variable, "26$") |
+             str_detect(variable, "27$") |
+             str_detect(variable, "28$")
+    ) 
+la_only['cat'] <-la_only$variable %>% substr(start = 7, stop =7)
+
+```
+Now that we have cat, we can group by and sum  
+```{r}
+totals <- la_only %>% group_by(cat) %>% tally(estimate)
+totals
+```
+
+
+Finally, let's change the names so that it reads like something good and plot
+
+```{r}
+total_new_title <- totals %>% mutate(cat = case_when(
+                                  cat == 'B' ~ "Black",
+                                  cat == 'C' ~ "American Indian",
+                                  cat == 'D' ~ "Asian",
+                                  cat == 'E' ~ "Hawaiian",
+                                  cat == 'F' ~ "Other",
+                                  cat == 'G' ~ "Multiracial",
+                                  cat == 'H' ~ "White",
+                                  cat == 'I' ~ "Hispanic"
+))
+total_new_title
+```
+```{r}
+g <- ggplot(total_new_title, aes(cat, n))
+g + geom_col()
+```
+```{r}
+total_new_title %>% write_csv()
