@@ -3,14 +3,14 @@
 Place matters. That's why data analysis often includes a geospatial or geographic component. Data analysts are called upon to merge tabular and geospatial data, count the number of points within given boundaries, and create a map illustrating the results.   
 
 Below are short demos of common techniques to help get you started with exploring and visualizing your geospatial data. 
-* [Importing/Exporting Data in Python](#Importing/Exporting-Data-in-Python)
+* [Importing and Exporting Data in Python](#Importing-and-Exporting-Data-in-Python)
 * [Merging Tabular and Geospatial Data](#Merging-Tabular-and-Geospatial-Data)
-* [Attaching geographic characteristics to all points/lines that fall within a boundary (spatial join/dissolve)](#Attaching-geographic-characteristics-to-all-points/lines-that-fall-within-a-boundary-(spatial-join/dissolve))
+* [Attaching geographic characteristics to all points/lines that fall within a boundary (spatial join and dissolve)](#Attaching-geographic-characteristics-to-all-points/lines-that-fall-within-a-boundary-(spatial-join-and-dissolve))
 * [Aggregating and calculating summary statistics](#Aggregating-and-calculating-summary-statistics)
 * [Buffers](#Buffers)
 
 
-## Importing/Exporting Data in Python
+## Importing and Exporting Data in Python
 ```
 # Import Python packages
 import pandas as pd
@@ -70,14 +70,14 @@ merge = pd.merge(gdf, df, left_on = 'District', right_on = 'CD')
 merge
 ```
 
-
 | District | Geometry | CD | Council_Member | Population
 | ---| ---- | --- | --- | --- | 
 | 1 | polygon | 1 | Leslie Knope | 1,500
 | 2 | polygon | 2 | Jeremy Jamm | 2,000
 | 3 | polygon | 3 | Douglass Howser | 2,250
 
-## Attaching geographic characteristics to all points/lines that fall within a boundary (spatial join/dissolve)
+## Attaching geographic characteristics to all points/lines that fall within a boundary (spatial join and dissolve)
+
 Sometimes with a point shapefile (list of lat/lon points), we want to count how many points fall within the boundary. Unlike the previous example, these points aren't attached with Council District information, so we need to generate that ourselves.
 
 The ArcGIS equivalent of this is a <b> spatial join </b> between the point and polygon shapefiles, then <b> dissolving </b> to calculate summary statistics.
