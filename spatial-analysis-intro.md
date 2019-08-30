@@ -49,6 +49,7 @@ gdf.to_file(driver = 'GeoJSON', filename = 's3://bucket-name/my_geojson.geojson'
 We might have two files: Council District boundaries (geospatial) and population values (tabular). Through visual inspection, we know that `CD` and `District` are columns that help us make this match.
 
 Our dataframe looks like this:
+
 | CD | Council_Member | Population |
 | ---| ---- | --- |
 | 1 | Leslie Knope | 1,500 |
@@ -56,6 +57,7 @@ Our dataframe looks like this:
 | 3 | Douglass Howser | 2,250
 
 Our geodataframe looks like this:
+
 | District | Geometry 
 | ---| ---- | 
 | 1 |  polygon 
@@ -67,6 +69,7 @@ We could merge these two dfs using the District and CD columns. If our left df i
 merge = pd.merge(gdf, df, left_on = 'District', right_on = 'CD')
 merge
 ```
+
 
 | District | Geometry | CD | Council_Member | Population
 | ---| ---- | --- | --- | --- | --- 
@@ -89,6 +92,7 @@ gdf = gdf.to_crs({'init':'epsg:4326'})
 ```
 
 `locations` lists the Paunch Burgers locations and their annual sales. 
+
 | Store | City | Sales_millions | Geometry | 
 | ---| ---- | --- | --- |
 | 1 | Pawnee  | $5 | (x1,y1) 
@@ -100,6 +104,7 @@ gdf = gdf.to_crs({'init':'epsg:4326'})
 | 7 | Indianapolis  | $7 | (x7, y7)
 
 `gdf` is the Council District boundaries. 
+
 | District  | Geometry
 | ---| ---- | 
 | 1 | polygon |
@@ -116,6 +121,7 @@ join = gpd.sjoin(locations, gdf, how = 'inner', op = 'intersects)
 ``` 
 
 The `join` gdf looks like this. We lost Stores 4 (Eagleton) and 7 (Indianapolis) because they were outside of Pawnee City Council boundaries.
+
 | Store | City | Sales_millions | Geometry_x | District | Geometry_y 
 | ---| ---- | --- | --- | --- | ---|
 | 1 | Pawnee  | $5 | (x1,y1) | 1 | polygon
@@ -141,7 +147,8 @@ summary = join.groupby(['District', 'Geometry_y']).agg({'Store': 'count',
 summary.rename(column = {'Geometry_y': 'Geometry'}, inplace = True)
 summary
 ```
-| District | Store | Sales_millions|  Geometry  
+
+| District | Store | Sales_millions | Geometry  
 | ---| ---- | --- | --- | --- |
 | 1 | 2 | $9 | polygon
 | 2 | 2 | $8.5 | polygon 
@@ -163,7 +170,8 @@ Buffers are areas of a certain distance around a given point, line, or polygon. 
 We start with two point shapefiles: `locations` (Paunch Burger locations) and `homes` (home addresses for my 2 friends). The goal is to find out how many Paunch Burgers are located within a 2 miles of my friends.
 
 `locations`: Paunch Burger locations 
-| Store | City | Sales_millions | Geometry | 
+
+| Store | City | Sales_millions | Geometry 
 | ---| ---- | --- | --- |
 | 1 | Pawnee  | $5 | (x1,y1) 
 | 2 | Pawnee | $2.5 | (x2, y2)
@@ -174,7 +182,8 @@ We start with two point shapefiles: `locations` (Paunch Burger locations) and `h
 | 7 | Indianapolis  | $7 | (x7, y7)
 
 
-`homes`: friends' addresses 
+`homes`: friends' addresses
+
 | Name |  Geometry  
 | ---| ---- | --- | 
 | Leslie Knope | (x1, y1) 
@@ -212,7 +221,7 @@ sjoin
 * Geometry_x is the point geometry from our left df `locations`.
 * Geometry_y is the polygon geometry from our right df `homes_buffer`.
 
-| Store | Geometry_x | Name | Geometry_y | 
+| Store | Geometry_x | Name | Geometry_y 
 | ---| ---- | --- | --- |
 | 1 | (x1,y1)   | Leslie Knope | polygon
 | 3 | (x3, y3)  | Ann Perkins |  polygon
@@ -231,7 +240,7 @@ count = sjoin.groupby('Name').agg({'Store':'count}).reset_index()
 ```
 
 The final `count`:
-| Name | Store |
+| Name | Store 
 | ---| ---- | 
 | Leslie Knope | 3
 | Ann Perkins | 1
