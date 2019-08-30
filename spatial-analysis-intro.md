@@ -72,7 +72,7 @@ merge
 
 
 | District | Geometry | CD | Council_Member | Population
-| ---| ---- | --- | --- | --- | --- 
+| ---| ---- | --- | --- | --- | 
 | 1 | polygon | 1 | Leslie Knope | 1,500
 | 2 | polygon | 2 | Jeremy Jamm | 2,000
 | 3 | polygon | 3 | Douglass Howser | 2,250
@@ -106,8 +106,8 @@ gdf = gdf.to_crs({'init':'epsg:4326'})
 `gdf` is the Council District boundaries. 
 
 | District  | Geometry
-| ---| ---- | 
-| 1 | polygon |
+| ---| ----
+| 1 | polygon
 | 2 | polygon
 | 3 | polygon
 
@@ -149,7 +149,7 @@ summary
 ```
 
 | District | Store | Sales_millions | Geometry  
-| ---| ---- | --- | --- | --- |
+| ---| ---- | --- | --- 
 | 1 | 2 | $9 | polygon
 | 2 | 2 | $8.5 | polygon 
 | 3 | 1 | $2.5 | polygon 
@@ -185,7 +185,7 @@ We start with two point shapefiles: `locations` (Paunch Burger locations) and `h
 `homes`: friends' addresses
 
 | Name |  Geometry  
-| ---| ---- | --- | 
+| ---| ---- |
 | Leslie Knope | (x1, y1) 
 | Ann Perkins | (x2, y2)  
 
