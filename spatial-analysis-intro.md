@@ -116,8 +116,10 @@ A spatial join finds the Council District the location falls within and attaches
 ```
 join = gpd.sjoin(locations, gdf, how = 'inner', op = 'intersects)
 
-# how = 'inner' means that we only want to keep observations that matched, i.e locations that were within the council district boundaries.
-# op = 'intersects' means that we are joining based on whether or not the location intersects with the council district.
+# how = 'inner' means that we only want to keep observations that matched, 
+i.e locations that were within the council district boundaries.
+# op = 'intersects' means that we are joining based on whether or not the location intersects 
+with the council district.
 ``` 
 
 The `join` gdf looks like this. We lost Stores 4 (Eagleton) and 7 (Indianapolis) because they were outside of Pawnee City Council boundaries.
@@ -240,7 +242,8 @@ count = sjoin.groupby('Name').agg({'Store':'count}).reset_index()
 ```
 
 The final `count`:
+
 | Name | Store 
-| ---| ---- | 
+| ---| ---- |
 | Leslie Knope | 3
 | Ann Perkins | 1
