@@ -5,7 +5,7 @@ Place matters. That's why data analysis often includes a geospatial or geographi
 Below are short demos of common techniques to help get you started with exploring and visualizing your geospatial data. 
 * [Importing and Exporting Data in Python](#Importing-and-Exporting-Data-in-Python)
 * [Merging Tabular and Geospatial Data](#Merging-Tabular-and-Geospatial-Data)
-* [Attaching geographic characteristics to all points or lines that fall within a boundary (spatial join and dissolve)](#Attaching-geographic-characteristics-to-all-points-or-lines-that-fall-within-a-boundary-(spatial-join-and-dissolve))
+* [Attaching geographic characteristics to all points or lines that fall within a boundary (spatial join and dissolve)](#Attaching-geographic-characteristics-to-all-points-or-lines-that-fall-within-a-boundary)
 * [Aggregating and calculating summary statistics](#Aggregating-and-calculating-summary-statistics)
 * [Buffers](#Buffers)
 
@@ -76,7 +76,7 @@ merge
 | 2 | polygon | 2 | Jeremy Jamm | 2,000
 | 3 | polygon | 3 | Douglass Howser | 2,250
 
-## Attaching geographic characteristics to all points or lines that fall within a boundary (spatial join and dissolve)
+## Attaching geographic characteristics to all points or lines that fall within a boundary
 
 Sometimes with a point shapefile (list of lat/lon points), we want to count how many points fall within the boundary. Unlike the previous example, these points aren't attached with Council District information, so we need to generate that ourselves.
 
