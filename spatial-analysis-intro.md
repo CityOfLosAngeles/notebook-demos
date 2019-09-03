@@ -167,7 +167,14 @@ summary.to_file(driver = 'ESRI Shapefile',
 ```
 
 ## Buffers 
-Buffers are areas of a certain distance around a given point, line, or polygon. A 5 mile buffer around a point would be a circle of 5 mile radius centered at the point.
+Buffers are areas of a certain distance around a given point, line, or polygon. Buffers are used to determine <i> proximity </i>. A 5 mile buffer around a point would be a circle of 5 mile radius centered at the point. This [ESRI page](http://desktop.arcgis.com/en/arcmap/10.3/tools/analysis-toolbox/buffer.htm) shows how buffers for points, lines, and polygons look.  
+
+Some examples of questions that buffers help answer are: 
+* How many stores are within 1 mile of my house?
+* Which streets are within 5 miles of the mall?
+* Which census tracts or neighborhoods are within a half mile of the rail station?
+
+Small buffers can also be used to determine whether 2 points are located in the same place. A shopping mall or the park might sit on a large property. If points are geocoded to various areas of the mall / park, they would show up as 2 distinct locations, when in reality, we consider them the same location. 
 
 We start with two point shapefiles: `locations` (Paunch Burger locations) and `homes` (home addresses for my 2 friends). The goal is to find out how many Paunch Burgers are located within a 2 miles of my friends.
 
